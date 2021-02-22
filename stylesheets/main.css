@@ -1,0 +1,20 @@
+
+
+body {
+    background: blue;
+}
+
+h5{
+    font-size: 1.4rem;
+}       
+/* Classes */
+
+
+
+@media screen and (max-width:500px) {
+    body{font-size: 10px;}
+
+    header {
+        background-color: pink;
+    }
+}
