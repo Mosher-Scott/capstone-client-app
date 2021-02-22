@@ -10,6 +10,8 @@
 <?php
     require_once('common/footer.php');
 ?>
+
+<h1>bite me</h1>
 </body>
 </html>
 

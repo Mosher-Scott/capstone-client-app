@@ -2,7 +2,7 @@
     require_once('initialize.php');
     $isLoggedIn = '';
 
-    if ($_SESSION['loggedin'] == TRUE && isset($_SESSION['clientData'])) {
+    if ($_SESSION['loggedin'] == TRUE) {
             $isLoggedIn = 'Yes';
     } else {
         $isLoggedIn = 'No';
@@ -15,6 +15,8 @@
 <head>
   <meta charset="utf-8">
 
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
   <title>Fitness Tracker</title>
   <meta name="description" content="Fitness Tracker - Client Portal">
   <meta name="author" content="Scott Mosher">
@@ -25,28 +27,9 @@
 </head>
 <header class="text-center">
     <h1 class="text-center">Fitness Tracker - Client Portal</h1>
-    <div id="accountInfo">
-        <div id="loggedInName">
-            <?php if($isLoggedIn == 'Yes') {
-            // echo ("<h4><span>Welcome " . $clientData['clientFirstname'] . "</span></h4>"); 
-            echo ('<h4><a href="' . urlPath('/controller/index.php?action=userAlreadyLoggedIn') . '">Welcome ' . $_SESSION['clientData']['clientFirstname'] . "</a></h4>");  
-            }
-            ?>
-        </div>
-                    
-        <?php
-            if ($_SESSION['loggedin'] == TRUE) {
-                echo ('<a href="' . urlPath('/controller/index.php?action=logout') . '">logOut</a>');
-            } else {
-                echo('<a href="' . urlPath('/controller/index.php?action=login') . '">Login To My Account</a>');
-            }
-            ?>
-    </div>
-    <nav>
-        <ul>
-            <li>Login</li>
-        </ul>   
-    </nav>
+   
 </header>
+
+<?php require_once('loginInfo.php');?>
 
 <body>

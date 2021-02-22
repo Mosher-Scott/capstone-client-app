@@ -14,6 +14,6 @@ switch($action) {
 
 default:
 
-    include 'view/home.php';
+    include 'view/index.php';
 }
 ?>
