@@ -15,6 +15,7 @@
             } else {
                 echo('<a class="btn btn-primary" href="' . urlPath('/controller/index.php?action=login') . '">Login To My Account</a>');
             }
+            // Instead show the login form, not the links
         ?>
     </div>
 </div>
