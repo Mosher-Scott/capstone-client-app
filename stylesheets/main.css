@@ -11,10 +11,25 @@ h5{
 
 
 
-@media screen and (max-width:500px) {
-    body{font-size: 10px;}
+@media screen and (max-width:700px) {
+    body{
+        font-size: 10px;
+        background-color: red;
+    }
+
+    main {
+        margin: 50px;
+    }
 
     header {
-        background-color: pink;
+        background-color: green;
     }
+
+
+    .formDiv {
+        background-color: yellow;
+        border-bottom: red;
+    
+    }
+    
 }
