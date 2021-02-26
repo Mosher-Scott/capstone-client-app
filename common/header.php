@@ -3,6 +3,9 @@
     include_once($root . '/common/nav.php');
     include_once($root . '/library/connections.php');
     include_once($root . '/model/accounts.php');
+    include_once($root . '/scripts/clientFunctions.php');
+    include_once($root . '/scripts/login-scripts.php');
+    include_once($root . '/scripts/api-requests.php');
 
     $isLoggedIn = '';
 
@@ -25,14 +28,22 @@
   <meta name="description" content="Fitness Tracker - Client Portal">
   <meta name="author" content="Scott Mosher">
 
-
-  <link rel="stylesheet" href="stylesheets/main.css">
+  <link rel="stylesheet" href="../stylesheets/main.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Roboto&display=swap" rel="stylesheet">
     <script src="../scripts/api-requests.js"></script>
 
 </head>
 <body>
-<header class="text-center">
-    <h1 class="text-center">Fitness Tracker - Client Portal</h1>
-   
-</header>
+    <header class="text-center">
+        <h1 class="text-center">Fitness Tracker - Client Portal</h1>
+        <?php
+            if($_SESSION['loggedin']) {
+                include_once($root . '/common/loginInfo.php');
+            }
+        ?>
+        
+    </header>
+
+    <main>

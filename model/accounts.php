@@ -2,7 +2,6 @@
     function CheckEmail($email) {
         $db = devConnect();
 
-
         $sql = 'SELECT email FROM info WHERE email = :email';
 
         $stmt = $db -> prepare($sql);

@@ -1,12 +1,13 @@
 <?php 
-  include_once('common/header.php');
-  include_once('common/nav.php');
-  include_once('library/connections.php');
-  include_once('model/accounts.php');
-  include_once('scripts/login-scripts.php');
-  include_once('scripts/api-requests.php');
-  //print_r($_SERVER);
-  //var_dump($_REQUEST);
+
+  require_once('../common/initialize.php');
+  include_once($root . '/common/header.php');
+  include_once($root . '/common/nav.php');
+  include_once($root . '/library/connections.php');
+  include_once($root . '/model/accounts.php');
+  include_once($root . '/scripts/clientFunctions.php');
+  include_once($root . '/scripts/login-scripts.php');
+  include_once($root . '/scripts/api-requests.php');
 
   $action = filter_input(INPUT_POST,'pageType');
 
@@ -28,7 +29,7 @@
           if (empty($clientEmail) || empty($clientPassword)) {
               $message = '<p class="errorMessage">Please enter a valid email address and password</p>';
               include 'login.php';
-              include 'common/footer.php';
+              include '../common/footer.php';
               exit;
           }
   
@@ -50,7 +51,7 @@
           if($clientData['password'] != $clientPassword) {
               $message = '<p class="errorMessage">Please enter a valid password</p>';
               include('login.php');
-              include 'common/footer.php';
+              include($root . '/common/footer.php');
               exit;
           }
   
@@ -63,23 +64,28 @@
           // Now store the rest in the session array
           $_SESSION['clientData'] = $clientData;
           
-          include('common/loginInfo.php');
+         // include('common/loginInfo.php');
   
           //header("location:view/home.php");
-         include('home.php');
-         include 'common/footer.php';
+         //include('home.php');
+         header('location:home.php');
+         //include '../common/footer.php';
+         include($root . '/common/footer.php');
           exit;
 
         case 'logout':
+          echo("HI there");
 
           if ($_SESSION['loggedin'] == TRUE && isset($_SESSION['clientData'])) {
-              $isLoggedIn = 'Yes';
+            $isLoggedIn = 'Yes';
 
-              $cookie_name = 'email';
-          $email = $_SESSION['clientData']['email'];
+            echo("hi there");
+            $cookie_name = 'email';
+            $email = $_SESSION['clientData']['email'];
+            $clientId = $_SESSION['clientData']['fitness_app_client_id'];
 
-          setcookie($cookie_name,$email , 1, '/');
-          unset($_COOKIE[$cookie_name]);
+            setcookie($cookie_name,$email , 1, '/');
+            unset($_COOKIE[$cookie_name]);
           } else {
               $isLoggedIn = 'No';
           }
@@ -91,7 +97,7 @@
           // Destroy the session
           session_destroy();
 
-          header('location:../index.php');
+          header('location:index.php');
 
       break;
   
@@ -106,9 +112,6 @@
 
 ?>
 
-
-
-<main>
 <?php
 
   // If the user isn't logged in, display the login form
@@ -120,14 +123,14 @@
   
   
 ?>
-</main>
+
 
 
 
 
 
 <?php
-    require_once('common/footer.php');
+    include($root . '/common/footer.php');
 ?>
 
 

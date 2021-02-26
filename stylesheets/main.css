@@ -1,35 +1,57 @@
-
+/* Font Families
+font-family: 'Lato', sans-serif;
+font-family: 'Roboto', sans-serif;
+ */
 
 body {
-    background: blue;
+    background-color: lightsteelblue !important;
 }
 
 h5{
     font-size: 1.4rem;
 }       
-/* Classes */
+
+
 
 
 
 @media screen and (max-width:700px) {
     body{
         font-size: 10px;
-        background-color: red;
+        background-color: lightsteelblue !important;
     }
 
     main {
-        margin: 50px;
+
+        background-color: white;
+        padding-left: 10px;
+        padding-right: 10px;
+        font-family: 'Lato', sans-serif;
     }
 
     header {
-        background-color: green;
+        background-color: white;
+        padding: 0px;
+        margin: 0px;
     }
 
-
-    .formDiv {
-        background-color: yellow;
-        border-bottom: red;
-    
+    h1 {
+        font-family: 'Roboto', sans-serif;
     }
+
+    b {
+        padding-right: 5px;
+    }
+
+    #formDiv {
+        background-color: white;
+        padding: 2px 10px 2px 10px;
+        margin: 0px;
+    }
+
+    .table-div {
+        padding: 5px;
+    }
+
     
-}
+} /* End of media query */

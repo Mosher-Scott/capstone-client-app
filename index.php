@@ -14,6 +14,6 @@ switch($action) {
 
 default:
 
-    include 'view/index.php';
+    header('location:/view/index.php');
 }
 ?>
