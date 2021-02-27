@@ -1,7 +1,7 @@
 <?php
 function devConnect(){
-    
-    if ($_SERVER["DOCUMENT_ROOT"] == "C:/Users/smosher/source/repos/capstone-client-app") {
+    echo($_SERVER["DOCUMENT_ROOT"]);
+    if ($_SERVER["DOCUMENT_ROOT"] == "C:/Users/smosher/source/repos/capstone-client-app" || $_SERVER["DOCUMENT_ROOT"] == "G:/xampp/htdocs") {
         $server = 'localhost';
         $dbname = 'fitnessapp';
         $userName = "localUser";
@@ -26,7 +26,7 @@ function devConnect(){
      return $link;
     } catch(PDOException $e) {
         
-     print_r($e);
+     print_r("Sorry, there was an error connecting to the database");
      exit;
     }
    }

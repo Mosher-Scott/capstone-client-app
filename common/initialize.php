@@ -6,14 +6,18 @@
     session_start();
     
     $root = realpath($_SERVER["DOCUMENT_ROOT"]);
-    
+    //echo($root);
+    if ($root == "G:\\xampp\htdocs") {
+        $root = "G:\\xampp\htdocs\\fitness-app";
+    }
+
+    //echo($root);
     //define("ROOT_PATH", $_SERVER['DOCUMENT_ROOT'] . 'capstone-client-app');
 
     define("ROOT_PATH", $_SERVER['DOCUMENT_ROOT']);
 
     $path = $_SERVER['DOCUMENT_ROOT'];
     $path2 = $_SERVER['DOCUMENT_ROOT'] . 'capstone-client-app';
-    
 
      // * Can dynamically find everything in URL up to "/fitness-app"
      $public_end = strpos($_SERVER['SCRIPT_NAME'], '/') + 0; // Decides that is where the document root is
