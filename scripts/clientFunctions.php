@@ -184,11 +184,13 @@
         return $workoutDiv;
     }
 
-    function CreateTrainingSessionExercisesForm($exercises) {
+    function CreateTrainingSessionExercisesForm($exercises, $sessionId) {
        // var_dump($exercises);
         $form = "<div id='sessionForm' class='form-group'>";
         $form .= "<form method='post'>";
         $arrayId = 0;
+
+        $form .= "<input type='hidden' name='sessionId' value='$sessionId'>";
 
         foreach($exercises AS $exercise) {
             
@@ -225,9 +227,7 @@
         $form .= "</form>";
         $form .= "</div>";
 
-
         return $form;
-
     }
   
 

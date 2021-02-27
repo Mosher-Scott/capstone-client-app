@@ -40,7 +40,7 @@
         $sessionInfo = GetTrainingSessionExercises($sessionId);
         // print_r($sessionInfo);
 
-        echo(CreateTrainingSessionExercisesForm($sessionInfo));
+        echo(CreateTrainingSessionExercisesForm($sessionInfo, $sessionId));
 
         echo("");
 

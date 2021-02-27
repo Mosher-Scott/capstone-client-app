@@ -1,6 +1,7 @@
 <?php 
 
   require_once('../common/initialize.php');
+  //print_r($_SERVER);
   include_once($root . '/common/header.php');
   include_once($root . '/common/nav.php');
   include_once($root . '/library/connections.php');
