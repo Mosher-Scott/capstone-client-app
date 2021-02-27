@@ -185,9 +185,10 @@
     }
 
     function CreateTrainingSessionExercisesForm($exercises) {
-        
+       // var_dump($exercises);
         $form = "<div id='sessionForm' class='form-group'>";
         $form .= "<form method='post'>";
+        $arrayId = 0;
 
         foreach($exercises AS $exercise) {
             
@@ -196,28 +197,31 @@
             $muscleGroup = $exercise['muscle_group'];
             $id = $exercise['id'];
 
-            $form .= "<div id='exerciseInfo'>";
+            $form .= "<div id='exercise[$arrayId]Info'>";
             $form .= "<p><b>Exercise: </b>$name</p>";
             $form .= "<p><b>Instructions: </b>$instructions</p>";
+            //$form .= "<iframe width='400' height='315' src='https://www.youtube.com/embed/ysdVPVuj7_s' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>";
             $form .= "<p><b>Muscle Group: </b>$muscleGroup</p>";
             $form .= "</div>";
         
-            $form .= "<input type='hidden' name='exerciseId' value='$id'>";
-            $form .= "<label for='sets'>Sets: </label>";
-            $form .= "<input type='text' class='form-control' placeholder=' Sets' id='sets' name='sets' required>";
-            $form .= "<label for='reps'>Reps: </label>";
-            $form .= "<input type='text 'class='form-control' placeholder=' Reps' id='reps' name='reps' required>";
+            $form .= "<input type='hidden' name='exercise[$arrayId][id]' value='$id'>";
 
-            $form .= "<label for='weight'>Weight: </label>";
-            $form .= "<input type='text' class='form-control' placeholder=' Weight' id='weight' name='weight' required>";
+            $form .= "<label for='exercise[$arrayId]sets'>Sets: </label>";
+            $form .= "<input type='text' class='form-control' id='exercise[$arrayId]sets' name='exercise[$arrayId][sets]' required>";
+            $form .= "<label for='exercise[$arrayId]reps'>Reps: </label>";
+            $form .= "<input type='text' class='form-control' id='exercise[$arrayId]reps' name='exercise[$arrayId][reps]' required>";
 
-            $form .= "<label for='seconds'>Seconds: </label>";
-            $form .= "<input type='text' class='form-control' placeholder=' seconds' id='seconds' name='seconds' required>";
-            $form .= "<hr>";
+            $form .= "<label for='exercise[$arrayId]weight'>Weight: </label>";
+            $form .= "<input type='text' class='form-control' id='exercise[$arrayId]weight' name='exercise[$arrayId][weight]'>";
+
+            $form .= "<label for='exercise[$arrayId]seconds'>Seconds: </label>";
+            $form .= "<input type='text' class='form-control' id='exercise[$arrayId]seconds' name='exercise[$arrayId][seconds]'>";
+            //$form .= "<hr>";
         //print_r($exercise['exercise_name']);
+            $arrayId++;
         }     
 
-        $form .= "<button type='submit' class='btn btn-primary' value='save>Button</button>";
+        $form .= "<button type='submit' class='btn btn-primary' value='save'>Button</button>";
         $form .= "</form>";
         $form .= "</div>";
 
