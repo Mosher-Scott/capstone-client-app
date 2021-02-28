@@ -51,11 +51,14 @@
             echo("<p>Training Session Not Found not found</p>");
             
         } else {
-            echo("<a class='btn btn-primary' href='home.php'>Back</a>");
+
             $sessionInfo = GetTrainingSessionExercises($sessionId);
             // print_r($sessionInfo);
     
             echo(CreateTrainingSessionExercisesForm($sessionInfo, $sessionId, $clientId));
+
+            echo("<br>");
+            echo("<a class='btn btn-primary' href='home.php'>Back</a>");
     
         }
     }

@@ -226,7 +226,7 @@
              $arrayId++;
          }     
  
-         $form .= "<button type='submit' class='btn btn-primary' value='save'>Button</button>";
+         $form .= "<button type='submit' class='btn btn-primary' value='save'>Save Workout</button>";
          $form .= "</form>";
          $form .= "</div>";
  
