@@ -1,7 +1,7 @@
 <?php
     function CheckEmail($email) {
         $db = devConnect();
-
+        echo($email);
         $sql = 'SELECT email FROM info WHERE email = :email';
 
         $stmt = $db -> prepare($sql);

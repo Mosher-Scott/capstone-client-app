@@ -9,6 +9,7 @@ $authToken;
 
 define("clientEndpoint", $environment . "clients/");
 define("trainingSessionEndpoint", $environment . "trainingsessions/");
+define("clientWorkoutHistory", $environment . "clients/workouthistory");
 
 // Requires an endpoint.  It should be a fully formed endpoint
 function GetRequest($endpoint){
@@ -74,27 +75,33 @@ function PostRequest($endpoint){
      return $response;
  }
 
- function PostRequestDataInBody($endpoint){
+ function PostRequestDataInBody($endpoint, $formData){
 
-    //var_dump($endpoint);
+    //echo($formData);
     $curl = curl_init();
- 
-     curl_setopt_array($curl, array(
-     CURLOPT_URL => $endpoint,
-     CURLOPT_RETURNTRANSFER => true,
-     CURLOPT_TIMEOUT => 30,
-     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-     CURLOPT_CUSTOMREQUEST => "POST",
-     CURLOPT_HTTPHEADER => array(
-         "cache-control: no-cache"
-     ),
-     ));
- 
+
+    curl_setopt_array($curl, array(
+    CURLOPT_URL => 'localhost:90/clients/workouthistory',
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => '',
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => 'POST',
+    //CURLOPT_POSTFIELDS =>'{"sessionId":"6","clientId":"1","exercise":[{"id":"7","sets":"1","reps":"1","weight":"10","seconds":""},{"id":"8","sets":"3","reps":"10","weight":"52","seconds":""},{"id":"9","sets":"13","reps":"1","weight":"","seconds":"25"},{"id":"19","sets":"3","reps":"12","weight":"1","seconds":"23"},{"id":"20","sets":"3","reps":"12","weight":"15","seconds":"3"},{"id":"21","sets":"9","reps":"80","weight":"15","seconds":"23"}]}',
+    CURLOPT_POSTFIELDS => $formData,
+    CURLOPT_HTTPHEADER => array(
+        'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InFTRndhd1czYUVjZXF1cnUwZXdVeCJ9.eyJpc3MiOiJodHRwczovL2Rldi13NHgzcHYzYS51cy5hdXRoMC5jb20vIiwic3ViIjoibnhYOWJtS2ZSSElZUW04ZWQ5cmdITHl1eEtDREdma0pAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vY2Fwc3RvbmUtYXBpLWF1dGgiLCJpYXQiOjE2MTIxMDYzMjEsImV4cCI6MTYxMjE5MjcyMSwiYXpwIjoibnhYOWJtS2ZSSElZUW04ZWQ5cmdITHl1eEtDREdma0oiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMifQ.tbZAdrfTSHWXiwFFn5AdlKl0To9eopEj8FnMgijRJc0R2TJz2PrMamOAk0AhHNqeUd-B4qRQgOQZzpLVeOO57n6SFmQl1OnyhF01tYKNgzzuE40vNnZd3R1V-u1sf17SltcraXHE8lAc4XCotU5-z-1WhbjzSz8b3BrMJdwofDlfGvw7ylhLRuAZvZldH_-6XC3MlhsAbOuvGw-aQDFAnU5AZNkup9qEgB-QyddMPBmbHHCkotfb-yu62p_1gkiMiBivpok3elLP8dUooR4FQuI5NmCy2yb7pi3d4hfpREm7IdZk_1dch3zxE_Dr5bGsMuF6KsfNMomjJz8PzsOMcA',
+        'Content-Type: application/json'
+    ),
+    ));
+
      $response = curl_exec($curl);
      $err = curl_error($curl);
  
      curl_close($curl);
- 
+
      return $response;
  }
 
@@ -111,23 +118,23 @@ function ParseJsonData($response){
 function GetAuthToken() {
 
     $curl = curl_init();
-
+    
     curl_setopt_array($curl, array(
-    CURLOPT_URL => 'https://dev-w4x3pv3a.us.auth0.com/oauth/token',
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_ENCODING => '',
-    CURLOPT_MAXREDIRS => 10,
-    CURLOPT_TIMEOUT => 0,
-    CURLOPT_FOLLOWLOCATION => true,
-    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    CURLOPT_CUSTOMREQUEST => 'POST',
-    CURLOPT_POSTFIELDS =>'{"client_id":"nxX9bmKfRHIYQm8ed9rgHLyuxKCDGfkJ","client_secret":"14jeDljEsFy0P8Jnam8M0fQIOByPjNZu-KDoKFTG6lL1c5GsRFG74E9q8Y8qnY4f","audience":"https://capstone-api-auth","grant_type":"client_credentials"}',
-    CURLOPT_HTTPHEADER => array(
+      CURLOPT_URL => 'https://dev-w4x3pv3a.us.auth0.com/oauth/token',
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => '',
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => 'POST',
+      CURLOPT_POSTFIELDS =>'{"client_id":"nxX9bmKfRHIYQm8ed9rgHLyuxKCDGfkJ","client_secret":"14jeDljEsFy0P8Jnam8M0fQIOByPjNZu-KDoKFTG6lL1c5GsRFG74E9q8Y8qnY4f","audience":"https://capstone-api-auth","grant_type":"client_credentials"}',
+      CURLOPT_HTTPHEADER => array(
         'Content-Type: application/json',
         'Cookie: __cfduid=d3ffb9dc6ab6765031fdfac29981f69551612104410; did=s%3Av0%3A26c33a30-63d3-11eb-923e-8b0fb8b172c4.GkGhLRf3Glj9hLdVmRrwrNY8Z2Y4LORvGl93Akgf6%2B0; did_compat=s%3Av0%3A26c33a30-63d3-11eb-923e-8b0fb8b172c4.GkGhLRf3Glj9hLdVmRrwrNY8Z2Y4LORvGl93Akgf6%2B0'
-    ),
+      ),
     ));
-
+    
     $response = curl_exec($curl);
 
     curl_close($curl);

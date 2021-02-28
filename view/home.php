@@ -6,6 +6,8 @@
 
   // Get & Parse the client data
   $clientDbData = GetClientData($clientId);
+
+  //print_r($clientId);
   
   $firstName = $clientDbData[0]['firstname'];
   $lastName = $clientDbData[0]['lastname'];
@@ -36,7 +38,7 @@
 
   <div id="trainingSessionSection">
     <h3 class='text-center'>Available Training Sessions</h3>
-    <?php echo(CreateTrainingSessionTable($trainingSessionsArray)); ?>
+    <?php echo(CreateTrainingSessionTable($trainingSessionsArray, $clientId)); ?>
     <hr>
   </div>
 

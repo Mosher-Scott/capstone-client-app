@@ -25,7 +25,7 @@ function devConnect(){
      $link = new PDO($dsn, $userName, $password, $options);
      return $link;
     } catch(PDOException $e) {
-        
+        echo ($e);
      print_r("Sorry, there was an error connecting to the database");
      exit;
     }

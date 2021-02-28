@@ -1,5 +1,5 @@
 <?php
-require_once('common/initialize.php');
+//require_once('common/initialize.php');
 
 $action = filter_input(INPUT_POST,'action');
 
