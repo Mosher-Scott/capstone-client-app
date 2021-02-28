@@ -6,6 +6,7 @@
     session_start();
     
     $root = realpath($_SERVER["DOCUMENT_ROOT"]);
+    //print_r($root);
     //echo($root);
     if ($root == "G:\\xampp\htdocs") {
         $root = "G:\\xampp\htdocs\\fitness-app";

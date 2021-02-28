@@ -19,7 +19,7 @@
    // Check the action of what you wanted the form to do
    switch($action) {
       case 'signInRequest':
-  
+          echo("<h3>Login</h3>");
           // Filter & check patterns
           $clientEmail = filter_input(INPUT_POST, 'userEmail', FILTER_SANITIZE_EMAIL);
           $clientEmail = checkEmailFormat($clientEmail);
@@ -47,6 +47,8 @@
           //     include '../view/login.php';
           //     exit;
           // }
+          echo("<h3>client data</h3>");
+          print_r($clientData);
   
           // Unhashed passwords
           if($clientData['password'] != $clientPassword) {
@@ -75,12 +77,12 @@
           exit;
 
         case 'logout':
-          echo("HI there");
+          //echo("HI there");
 
           if ($_SESSION['loggedin'] == TRUE && isset($_SESSION['clientData'])) {
             $isLoggedIn = 'Yes';
 
-            echo("hi there");
+            //echo("hi there");
             $cookie_name = 'email';
             $email = $_SESSION['clientData']['email'];
             $clientId = $_SESSION['clientData']['fitness_app_client_id'];
@@ -103,14 +105,6 @@
       break;
   
    } // End of switch statement
-  
-   
-
-
-
-
-
-
 ?>
 
 <?php
