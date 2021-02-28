@@ -22,7 +22,7 @@
   // For troubleshooting and seeing what everything is
   // print_r($clientDbData);
   // echo("<br>Training Sessions<br>");
-  // var_dump($trainingSessionsArray);
+  // print_r($trainingSessionsArray);
   // echo("<br>Workout History<br>");
   //var_dump($workoutHistoryArray);
 

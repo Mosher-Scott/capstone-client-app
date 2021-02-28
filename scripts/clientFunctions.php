@@ -1,6 +1,4 @@
 <?php
-    
-    
     function GetClientData($clientId) {
   
         $endpoint = clientEndpoint . $clientId;
@@ -210,18 +208,31 @@
              $form .= "</div>";
          
              $form .= "<input type='hidden' name='exercise[$arrayId][id]' value='$id'>";
- 
+            
+             $form .= "<div class='form-group row'>";
+
+             $form .= "<div class='col-xs-2'>";
              $form .= "<label for='exercise[$arrayId]sets'>Sets: </label>";
-             $form .= "<input type='text' class='form-control' id='exercise[$arrayId]sets' name='exercise[$arrayId][sets]' required>";
+             $form .= "<input type='text' class='form-control' id='exercise[$arrayId]sets' name='exercise[$arrayId][sets]' required='true'>";
+             $form .= "</div>";
+
+             $form .= "<div class='col-xs-2'>";
              $form .= "<label for='exercise[$arrayId]reps'>Reps: </label>";
              $form .= "<input type='text' class='form-control' id='exercise[$arrayId]reps' name='exercise[$arrayId][reps]' required>";
- 
+             $form .= "</div>";
+
+             $form .= "<div class='col-xs-2'>";
              $form .= "<label for='exercise[$arrayId]weight'>Weight: </label>";
              $form .= "<input type='text' class='form-control' id='exercise[$arrayId]weight' name='exercise[$arrayId][weight]'>";
- 
+             $form .= "</div>";
+
+             $form .= "<div class='col-xs-2'>";
              $form .= "<label for='exercise[$arrayId]seconds'>Seconds: </label>";
              $form .= "<input type='text' class='form-control' id='exercise[$arrayId]seconds' name='exercise[$arrayId][seconds]'>";
-             //$form .= "<hr>";
+             $form .= "</div>";
+             
+             $form .= "</div>";
+             $form .= "<hr class='rounded-circle>";
          //print_r($exercise['exercise_name']);
              $arrayId++;
          }     
