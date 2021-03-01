@@ -31,6 +31,7 @@ function getClient($clientEmail) {
     $sql = 'SELECT fitness_app_client_id, email, password FROM info WHERE email = :email';
 
     $stmt = $db -> prepare($sql);
+    
     $stmt -> bindValue(':email', $clientEmail, PDO::PARAM_STR);
 
     $stmt -> execute();

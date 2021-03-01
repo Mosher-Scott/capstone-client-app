@@ -33,10 +33,11 @@
               include '../common/footer.php';
               exit;
           }
-  
+
           // If you've gotten this far, then the user inputs are valid.  Now get the user data
           $clientData = getClient($clientEmail);
-          //var_dump($clientData);
+
+          
   
           // Now verify the passwords match using hash
           // EDIT: NOT USING THIS RIGHT NOW
