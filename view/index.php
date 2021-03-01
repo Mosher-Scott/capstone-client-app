@@ -19,7 +19,7 @@
    // Check the action of what you wanted the form to do
    switch($action) {
       case 'signInRequest':
-          echo("<h3>Login</h3>");
+  
           // Filter & check patterns
           $clientEmail = filter_input(INPUT_POST, 'userEmail', FILTER_SANITIZE_EMAIL);
           $clientEmail = checkEmailFormat($clientEmail);
@@ -33,12 +33,11 @@
               include '../common/footer.php';
               exit;
           }
-
+          
           // If you've gotten this far, then the user inputs are valid.  Now get the user data
           $clientData = getClient($clientEmail);
-
+          //var_dump($clientData);
           
-  
           // Now verify the passwords match using hash
           // EDIT: NOT USING THIS RIGHT NOW
           // $hashCheck = password_verify($clientPassword, $clientData['clientPassword']);
@@ -48,8 +47,6 @@
           //     include '../view/login.php';
           //     exit;
           // }
-          echo("<h3>client data</h3>");
-          print_r($clientData);
   
           // Unhashed passwords
           if($clientData['password'] != $clientPassword) {
@@ -58,7 +55,7 @@
               include($root . '/common/footer.php');
               exit;
           }
-  
+          
           // If their login information is good, store some of it in the session data
           $_SESSION['loggedin'] = TRUE;
   
@@ -72,7 +69,7 @@
   
           //header("location:view/home.php");
          //include('home.php');
-         header('location:home.php');
+         header("location: $root . /views/home.php");
          //include '../common/footer.php';
          include($root . '/common/footer.php');
           exit;
@@ -106,6 +103,7 @@
       break;
   
    } // End of switch statement
+
 ?>
 
 <?php
