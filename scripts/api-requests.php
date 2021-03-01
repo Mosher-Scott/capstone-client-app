@@ -1,9 +1,9 @@
 <?php
 
 define("devEnvironment", "http://localhost:90/");
-define("liveEnvironment", "https://frozen-meadow-69055.herokuapp.com");
+define("liveEnvironment", "https://frozen-meadow-69055.herokuapp.com/");
 
-$environment = devEnvironment;
+$environment = liveEnvironment;
 
 $authToken;
 
