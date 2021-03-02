@@ -2,6 +2,11 @@
 
   include_once('../common/header.php');
 
+  if ($_SESSION['loggedin'] != TRUE) {
+    
+      header('Location: index.php');
+
+  }
   
   $clientId = $_SESSION['clientData']['fitness_app_client_id'];
 
@@ -30,8 +35,6 @@
 
  
 ?>
-
-
   <div id="clientInfo">
 
     <?php echo("<p><b>Name: </b>$firstName $lastName</p>");?>

@@ -66,7 +66,7 @@
           $_SESSION['clientData'] = $clientData;
           
          // include('common/loginInfo.php');
-          echo("<h2>http://fitness.scottmosherphotography.com/view/home.php</h2>");
+          //echo("<h2>http://fitness.scottmosherphotography.com/view/home.php</h2>");
           //header("location:view/home.php");
          //include('home.php');
          //header('HTTP/1.0 302 Found');
@@ -76,12 +76,12 @@
          exit;
 
         case 'logout':
-          echo("HI there");
+          //echo("HI there");
 
           if ($_SESSION['loggedin'] == TRUE && isset($_SESSION['clientData'])) {
             $isLoggedIn = 'Yes';
 
-            echo("hi there");
+            //echo("hi there");
             $cookie_name = 'email';
             $email = $_SESSION['clientData']['email'];
             $clientId = $_SESSION['clientData']['fitness_app_client_id'];
