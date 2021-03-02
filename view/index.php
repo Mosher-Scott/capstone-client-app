@@ -1,5 +1,5 @@
 <?php 
-
+  ob_start();
   require_once('../common/initialize.php');
   //print_r($_SERVER);
   include_once($root . '/common/header.php');
@@ -37,7 +37,7 @@
           // If you've gotten this far, then the user inputs are valid.  Now get the user data
           $clientData = getClient($clientEmail);
           //var_dump($clientData);
-          
+
           // Now verify the passwords match using hash
           // EDIT: NOT USING THIS RIGHT NOW
           // $hashCheck = password_verify($clientPassword, $clientData['clientPassword']);
@@ -66,21 +66,22 @@
           $_SESSION['clientData'] = $clientData;
           
          // include('common/loginInfo.php');
-  
+          echo("<h2>http://fitness.scottmosherphotography.com/view/home.php</h2>");
           //header("location:view/home.php");
          //include('home.php');
-         header("location: $root . /views/home.php");
+         //header('HTTP/1.0 302 Found');
+         header("Location: home.php");
          //include '../common/footer.php';
          include($root . '/common/footer.php');
-          exit;
+         exit;
 
         case 'logout':
-          //echo("HI there");
+          echo("HI there");
 
           if ($_SESSION['loggedin'] == TRUE && isset($_SESSION['clientData'])) {
             $isLoggedIn = 'Yes';
 
-            //echo("hi there");
+            echo("hi there");
             $cookie_name = 'email';
             $email = $_SESSION['clientData']['email'];
             $clientId = $_SESSION['clientData']['fitness_app_client_id'];
@@ -98,8 +99,8 @@
           // Destroy the session
           session_destroy();
 
-          header('location:index.php');
-
+          header("location: index.php");
+// Comments
       break;
   
    } // End of switch statement
@@ -125,6 +126,7 @@
 
 <?php
     include($root . '/common/footer.php');
+    ob_end_flush();
 ?>
 
 

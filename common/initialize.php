@@ -2,6 +2,10 @@
     define("PRIVATE_PATH", dirname(__FILE__));
     define("PROJECT_PATH", dirname(PRIVATE_PATH));
     define("IMAGES_PATH", PROJECT_PATH . '/images');
+    define("liveURL", "fitness.scottmosherphotography.com");
+    define("l2URL", "localhost:90");
+
+    $basePath;
 
     session_start();
     

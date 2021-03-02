@@ -1,7 +1,7 @@
 <?php
     function CheckEmail($email) {
         $db = devConnect();
-        //echo($email);
+        echo($email);
         $sql = 'SELECT email FROM info WHERE email = :email';
 
         $stmt = $db -> prepare($sql);
@@ -28,7 +28,7 @@ function getClient($clientEmail) {
         $sql = 'SELECT fitness_app_client_id, email, password FROM info WHERE email = :email';
         
         $stmt = $db -> prepare($sql);
-        
+        echo("<h1>suck</h1>");
         $stmt -> bindValue(':email', $clientEmail, PDO::PARAM_STR);
     
         $stmt -> execute();
@@ -44,7 +44,6 @@ function getClient($clientEmail) {
         exit;
 
     }
-    
 }
 
 

@@ -2,7 +2,9 @@
 function devConnect(){
     //echo($_SERVER["DOCUMENT_ROOT"]);
     if ($_SERVER["DOCUMENT_ROOT"] == "C:/Users/smosher/source/repos/capstone-client-app" || $_SERVER["DOCUMENT_ROOT"] == "G:/xampp/htdocs") {
-        $server = 'localhost';
+        
+      $basePath = l2URL;
+      $server = 'localhost';
         $dbname = 'fitnessapp';
         $userName = "localUser";
         $password = "testing123";
@@ -15,13 +17,14 @@ function devConnect(){
         
         return $link;
         } catch(PDOException $e) {
-            echo ($e);
-        print_r("Sorry, there was an error connecting to the database");
+            //echo ($e);
+            print_r("Sorry, there was an error connecting to the database");
         exit;
         }
 
     } else if ($_SERVER['DOCUMENT_ROOT'] == '/home/scott58/fitness.scottmosherphotography.com'){
-        $server = 'localhost';
+      $basePath = liveURL;  
+      $server = 'localhost';
         $dbname = 'scott58_capstonefitness';
         $userName = 'scott58_capstone';
         $password = 'SwingKid98!';
@@ -30,7 +33,7 @@ function devConnect(){
             $conn = new PDO("mysql:host=$server;dbname=$dbname", $userName, $password);
             // set the PDO error mode to exception
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo("<h2>Connected</h2>");
+            //echo("<h2>Connected</h2>");
             return $conn;
           } catch(PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
