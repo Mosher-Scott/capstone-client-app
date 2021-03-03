@@ -1,5 +1,5 @@
 <?php
-    
+    ob_start();
     class response {
         public $success;
         public $data;
@@ -31,12 +31,13 @@
         $result = json_decode($result, true);
 
         echo("<br>");
-        echo($result);
+        //print_r($result);
 
         if($result['success'] == '1') {
             echo '<script type="text/javascript"> SuccessfullyAddedWorkout(); </script>'; 
 
-            //header('location:home.php');
+            header("location: home.php");
+            exit;
         }
 
         // foreach ($_POST['exercise'] AS $item) {

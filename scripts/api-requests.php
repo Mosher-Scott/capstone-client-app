@@ -81,7 +81,7 @@ function PostRequest($endpoint){
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
-    CURLOPT_URL => 'localhost:90/clients/workouthistory',
+    CURLOPT_URL => $endpoint,
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => '',
     CURLOPT_MAXREDIRS => 10,
