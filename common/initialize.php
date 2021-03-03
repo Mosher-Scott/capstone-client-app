@@ -7,7 +7,6 @@
 
     $basePath;
 
-    session_start();
     
     $root = realpath($_SERVER["DOCUMENT_ROOT"]);
     //echo($root);

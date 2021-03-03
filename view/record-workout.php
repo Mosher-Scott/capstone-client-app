@@ -1,7 +1,19 @@
 <?php
+    
     class response {
         public $success;
         public $data;
+    }
+    
+    if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    } 
+
+    if (!$_SESSION['loggedin']) {
+    
+        header('Location: index.php');
+        exit;
     }
     
     include_once('../common/header.php');
@@ -23,7 +35,7 @@
         if($result['success'] == '1') {
             echo '<script type="text/javascript"> SuccessfullyAddedWorkout(); </script>'; 
 
-            header('location:home.php');
+            //header('location:home.php');
         }
 
         // foreach ($_POST['exercise'] AS $item) {

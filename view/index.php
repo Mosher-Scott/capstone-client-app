@@ -1,5 +1,6 @@
 <?php 
   ob_start();
+  session_start();
   require_once('../common/initialize.php');
   //print_r($_SERVER);
   include_once($root . '/common/header.php');

@@ -19,6 +19,7 @@ h5{
     body{
         font-size: 10px;
         background-color: lightsteelblue !important;
+        
     }
 
     main {
@@ -27,6 +28,8 @@ h5{
         padding-left: 10px;
         padding-right: 10px;
         font-family: 'Lato', sans-serif;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
     }
 
     header {

@@ -1,5 +1,5 @@
 <?php 
-
+  session_start();
   include_once('../common/header.php');
 
   if ($_SESSION['loggedin'] != TRUE) {
@@ -10,7 +10,7 @@
   
   $clientId = $_SESSION['clientData']['fitness_app_client_id'];
 
-  echo("<h1>$clientId</h1>");
+  // echo("<h1>$clientId</h1>");
   // Get & Parse the client data
   $clientDbData = GetClientData($clientId);
 
@@ -53,5 +53,7 @@
   </div>
 
 
-
+<?php
+include($root . '/common/footer.php');
+?>
 
