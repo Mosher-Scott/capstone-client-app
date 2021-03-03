@@ -31,6 +31,7 @@
         $result = json_decode($result, true);
 
         echo("<br>");
+        echo($result);
 
         if($result['success'] == '1') {
             echo '<script type="text/javascript"> SuccessfullyAddedWorkout(); </script>'; 
@@ -63,7 +64,7 @@
             echo("<p>Training Session Not Found not found</p>");
             
         } else {
-
+            echo("<a class='btn btn-primary' href='home.php'>Back</a>");
             $sessionInfo = GetTrainingSessionExercises($sessionId);
             // print_r($sessionInfo);
     

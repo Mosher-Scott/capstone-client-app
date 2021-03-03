@@ -6,7 +6,6 @@
     define("l2URL", "localhost:90");
 
     $basePath;
-
     
     $root = realpath($_SERVER["DOCUMENT_ROOT"]);
     //echo($root);
