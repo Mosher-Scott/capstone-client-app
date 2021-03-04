@@ -4,6 +4,7 @@
     define("IMAGES_PATH", PROJECT_PATH . '/images');
     define("liveURL", "fitness.scottmosherphotography.com");
     define("l2URL", "localhost:90");
+    define("desktopURL", "localhost:3308");
 
     $basePath;
     

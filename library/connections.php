@@ -1,25 +1,44 @@
 <?php
 function devConnect(){
     //echo($_SERVER["DOCUMENT_ROOT"]);
-    if ($_SERVER["DOCUMENT_ROOT"] == "C:/Users/smosher/source/repos/capstone-client-app" || $_SERVER["DOCUMENT_ROOT"] == "G:/xampp/htdocs") {
+    if ($_SERVER["DOCUMENT_ROOT"] == "C:/Users/smosher/source/repos/capstone-client-app") {
         
       $basePath = l2URL;
       $server = 'localhost';
         $dbname = 'fitnessapp';
         $userName = "localUser";
         $password = "testing123";
-  
         $dsn = 'mysql:host='.$server.';dbname='.$dbname;
         $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
         // Create the actual connection object and assign it to a variable
         try {
-        $link = new PDO($dsn, $userName, $password, $options);
-        
-        return $link;
+          $conn = new PDO("mysql:host=$server;dbname=$dbname", $userName, $password);
+          // set the PDO error mode to exception
+          $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+          //echo("<h2>Connected</h2>");
+          return $conn;
         } catch(PDOException $e) {
-            //echo ($e);
-            print_r("Sorry, there was an error connecting to the database");
-        exit;
+          echo "Connection failed: " . $e->getMessage();
+        }
+
+    } else if($_SERVER["DOCUMENT_ROOT"] == "G:/xampp/htdocs") {
+
+      $basePath = desktopURL;
+      $server = 'localhost';
+        $dbname = 'fitnessapp';
+        $userName = "localUser";
+        $password = "testing123";
+        $dsn = 'mysql:host='.$server.';dbname='.$dbname;
+        $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
+        // Create the actual connection object and assign it to a variable
+        try {
+          $conn = new PDO("mysql:host=$server;dbname=$dbname", $userName, $password);
+          // set the PDO error mode to exception
+          $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+          //echo("<h2>Connected</h2>");
+          return $conn;
+        } catch(PDOException $e) {
+          echo "Connection failed: " . $e->getMessage();
         }
 
     } else if ($_SERVER['DOCUMENT_ROOT'] == '/home/scott58/fitness.scottmosherphotography.com'){
