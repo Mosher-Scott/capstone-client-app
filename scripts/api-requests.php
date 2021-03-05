@@ -11,22 +11,60 @@ define("clientEndpoint", $environment . "clients/");
 define("trainingSessionEndpoint", $environment . "trainingsessions/");
 define("clientWorkoutHistory", $environment . "clients/workouthistory");
 
+class SecureToken {
+  public $token = '';
+  public $expireIn;
+  public $expirationDate;
+  public $test = 'hi';
+
+  public function SetExpirationDate() {
+    
+    date_default_timezone_set('America/Denver');
+  
+    $today = date("Y-m-d H:i:s");
+  
+    $todayTimestamp = strtotime($today);
+  
+    $tokenExpires = $todayTimestamp + 86400;
+  
+    $expirationdate = date("Y-m-d H:i:s", $tokenExpires);
+
+    $this->expirationDate = $expirationdate;
+  }
+
+  public function SetExpireIn($value) {
+    $this->expireIn = $value;
+  }
+
+  public function SetToken($value) {
+
+    $this->token = $value;
+  }
+
+}
+
+$secureToken = new SecureToken();
+
+
 // Requires an endpoint.  It should be a fully formed endpoint
 function GetRequest($endpoint){
+
+  $tokenString = "Authorization: Bearer " . $_SESSION['validationToken'];
 
    //var_dump($endpoint);
    $curl = curl_init();
 
-    curl_setopt_array($curl, array(
-    CURLOPT_URL => $endpoint,
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_TIMEOUT => 30,
-    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    CURLOPT_CUSTOMREQUEST => "GET",
-    CURLOPT_HTTPHEADER => array(
-        "cache-control: no-cache"
-    ),
-    ));
+    // curl_setopt_array($curl, array(
+    // CURLOPT_URL => $endpoint,
+    // CURLOPT_RETURNTRANSFER => true,
+    // CURLOPT_TIMEOUT => 30,
+    // CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    // CURLOPT_CUSTOMREQUEST => "GET",
+    // CURLOPT_HTTPHEADER => array(
+    //     "cache-control: no-cache",
+    //     "$tokenString"
+    // ),
+    // ));
 
     // From Postman
     curl_setopt_array($curl, array(
@@ -39,7 +77,7 @@ function GetRequest($endpoint){
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'GET',
         CURLOPT_HTTPHEADER => array(
-          'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InFTRndhd1czYUVjZXF1cnUwZXdVeCJ9.eyJpc3MiOiJodHRwczovL2Rldi13NHgzcHYzYS51cy5hdXRoMC5jb20vIiwic3ViIjoibnhYOWJtS2ZSSElZUW04ZWQ5cmdITHl1eEtDREdma0pAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vY2Fwc3RvbmUtYXBpLWF1dGgiLCJpYXQiOjE2MTIxMDYzMjEsImV4cCI6MTYxMjE5MjcyMSwiYXpwIjoibnhYOWJtS2ZSSElZUW04ZWQ5cmdITHl1eEtDREdma0oiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMifQ.tbZAdrfTSHWXiwFFn5AdlKl0To9eopEj8FnMgijRJc0R2TJz2PrMamOAk0AhHNqeUd-B4qRQgOQZzpLVeOO57n6SFmQl1OnyhF01tYKNgzzuE40vNnZd3R1V-u1sf17SltcraXHE8lAc4XCotU5-z-1WhbjzSz8b3BrMJdwofDlfGvw7ylhLRuAZvZldH_-6XC3MlhsAbOuvGw-aQDFAnU5AZNkup9qEgB-QyddMPBmbHHCkotfb-yu62p_1gkiMiBivpok3elLP8dUooR4FQuI5NmCy2yb7pi3d4hfpREm7IdZk_1dch3zxE_Dr5bGsMuF6KsfNMomjJz8PzsOMcA'
+          "$tokenString"
         ),
       ));
 
@@ -63,8 +101,8 @@ function PostRequest($endpoint){
      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
      CURLOPT_CUSTOMREQUEST => "POST",
      CURLOPT_HTTPHEADER => array(
-         "cache-control: no-cache"
-     ),
+      "$tokenString"
+    ),
      ));
  
      $response = curl_exec($curl);
@@ -92,8 +130,7 @@ function PostRequest($endpoint){
     //CURLOPT_POSTFIELDS =>'{"sessionId":"6","clientId":"1","exercise":[{"id":"7","sets":"1","reps":"1","weight":"10","seconds":""},{"id":"8","sets":"3","reps":"10","weight":"52","seconds":""},{"id":"9","sets":"13","reps":"1","weight":"","seconds":"25"},{"id":"19","sets":"3","reps":"12","weight":"1","seconds":"23"},{"id":"20","sets":"3","reps":"12","weight":"15","seconds":"3"},{"id":"21","sets":"9","reps":"80","weight":"15","seconds":"23"}]}',
     CURLOPT_POSTFIELDS => $formData,
     CURLOPT_HTTPHEADER => array(
-        'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InFTRndhd1czYUVjZXF1cnUwZXdVeCJ9.eyJpc3MiOiJodHRwczovL2Rldi13NHgzcHYzYS51cy5hdXRoMC5jb20vIiwic3ViIjoibnhYOWJtS2ZSSElZUW04ZWQ5cmdITHl1eEtDREdma0pAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vY2Fwc3RvbmUtYXBpLWF1dGgiLCJpYXQiOjE2MTIxMDYzMjEsImV4cCI6MTYxMjE5MjcyMSwiYXpwIjoibnhYOWJtS2ZSSElZUW04ZWQ5cmdITHl1eEtDREdma0oiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMifQ.tbZAdrfTSHWXiwFFn5AdlKl0To9eopEj8FnMgijRJc0R2TJz2PrMamOAk0AhHNqeUd-B4qRQgOQZzpLVeOO57n6SFmQl1OnyhF01tYKNgzzuE40vNnZd3R1V-u1sf17SltcraXHE8lAc4XCotU5-z-1WhbjzSz8b3BrMJdwofDlfGvw7ylhLRuAZvZldH_-6XC3MlhsAbOuvGw-aQDFAnU5AZNkup9qEgB-QyddMPBmbHHCkotfb-yu62p_1gkiMiBivpok3elLP8dUooR4FQuI5NmCy2yb7pi3d4hfpREm7IdZk_1dch3zxE_Dr5bGsMuF6KsfNMomjJz8PzsOMcA',
-        'Content-Type: application/json'
+      "$tokenString"
     ),
     ));
 
@@ -113,9 +150,20 @@ function ParseJsonData($response){
     return $data;
 }
 
-
 // Gets an auth token to be used in the requests
 function GetAuthToken() {
+    global $secureToken;
+
+    date_default_timezone_set('America/Denver');
+    $validToken = false;
+
+   if(isset($_SESSION['validationToken']) && isset($_SESSION['validationExpires'])) {
+     if($_SESSION['validationExpires'] > date("Y-m-d H:i:s"))
+     $validToken = true;
+     echo("token is valid");
+     return;
+   }
+   echo("Token not valid");
 
     $curl = curl_init();
     
@@ -139,6 +187,43 @@ function GetAuthToken() {
 
     curl_close($curl);
     return $response;
+}
+
+function ParseTokenResponse($response) {
+  global $secureToken;
+  
+  echo ($response);
+  $json = json_decode($response);
+
+  echo(gettype($json));
+ 
+  $secureToken-> SetToken($json->access_token);
+  $secureToken-> SetExpireIn($json->expires_in);
+  $secureToken-> SetExpirationDate();
+
+  $_SESSION['validationToken'] = $secureToken->token;
+  $_SESSION['validationExpires'] = $secureToken->expirationDate;
+
+  //echo("Secure Token Parse Token Response:" . $secureToken->expirationDate);
+  
+}
+
+function EchoToken() {
+  date_default_timezone_set('America/Denver');
+   global $secureToken;
+
+  // echo($secureToken->expirationDate);
+
+  // $today = date("Y-m-d H:i:s");
+
+  // $todayTimestamp = strtotime($today);
+
+  // $tokenExpires = $todayTimestamp + 86400;
+
+  // $expirationdate = date("Y-m-d H:i:s", $tokenExpires);
+  echo("token: <br>");
+  echo($secureToken->token);
+  echo("<br>expirationdate: " . $secureToken->expirationDate);
 }
 
 ?>
