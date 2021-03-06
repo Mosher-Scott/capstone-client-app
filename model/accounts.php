@@ -1,7 +1,7 @@
 <?php
     function CheckEmail($email) {
         $db = devConnect();
-        echo($email);
+        //echo($email);
         $sql = 'SELECT email FROM info WHERE email = :email';
 
         $stmt = $db -> prepare($sql);
@@ -20,7 +20,7 @@
         }
     }
 
-    // Get info on client based on email
+// Get info on client based on email
 function getClient($clientEmail) {
     try {
         $db = devConnect();
@@ -28,7 +28,7 @@ function getClient($clientEmail) {
         $sql = 'SELECT fitness_app_client_id, email, password FROM info WHERE email = :email';
         
         $stmt = $db -> prepare($sql);
-        echo("<h1>suck</h1>");
+        //echo("<h1>suck</h1>");
         $stmt -> bindValue(':email', $clientEmail, PDO::PARAM_STR);
     
         $stmt -> execute();
@@ -39,6 +39,34 @@ function getClient($clientEmail) {
         $stmt -> closeCursor();
     
         return $clientData;
+    } catch (PDOException $e) {
+        echo 'Connection failed: ' . $e->getMessage();
+        exit;
+
+    }
+}
+
+// Add a new client to the database
+function AddNewClient($email, $userPassword, $id) {
+    try {
+        $db = devConnect();
+
+        $sql = 'INSERT INTO info (fitness_app_client_id, email, password) VALUES (:id, :email, :password)';
+        
+        $stmt = $db -> prepare($sql);
+        //echo("<h1>suck</h1>");
+        $stmt -> bindValue(':email', $email, PDO::PARAM_STR);
+        $stmt -> bindValue(':password', $userPassword, PDO::PARAM_STR);
+        $stmt -> bindValue(':id', $id, PDO::PARAM_STR);
+    
+        $stmt -> execute();
+    
+        // Get the number of rows added
+        $rowsChanged = $stmt->rowCount();
+    
+        $stmt -> closeCursor();
+    
+        return $rowsChanged;
     } catch (PDOException $e) {
         echo 'Connection failed: ' . $e->getMessage();
         exit;
