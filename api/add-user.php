@@ -7,7 +7,9 @@
 
         $rest_json = file_get_contents("php://input");
         $_POST = json_decode($rest_json, true);
-        
+
+        header('Content-type: application/json');
+
         if(!isset($_POST['appId'])) {
             $errorArray = array('error' => "appId not found");
             $message = json_encode($errorArray);
@@ -55,7 +57,7 @@
         $doesEmailExist = CheckEmail($email);
 
         //echo($email);
-        echo("<br>" . $doesEmailExist);
+        //echo("<br>" . $doesEmailExist);
         
         if($doesEmailExist == 1) {
             $errorArray = array('error' => "Email already exists");
@@ -70,6 +72,11 @@
 
         if($wasSuccessfull == 1) {
             $errorArray = array('success' => "User registered");
+            $message = json_encode($errorArray);
+            echo($message);
+            return;
+        } else if ($wasSuccessfull == 0) {
+            $errorArray = array('error' => "An error occured adding the user");
             $message = json_encode($errorArray);
             echo($message);
             return;
