@@ -37,25 +37,26 @@
           
           // If you've gotten this far, then the user inputs are valid.  Now get the user data
           $clientData = getClient($clientEmail);
-          //var_dump($clientData);
+
+          $hashedPassword = password_hash($clientPassword, PASSWORD_DEFAULT);
 
           // Now verify the passwords match using hash
-          // EDIT: NOT USING THIS RIGHT NOW
-          // $hashCheck = password_verify($clientPassword, $clientData['clientPassword']);
+          $hashCheck = password_verify($clientPassword, $clientData['password']);
           
-          // if (!$hashCheck) {
+          if (!$hashCheck) {
+            $message = '<p class="errorMessage">Please enter a valid password</p>';
+            include('login.php');
+            include($root . '/common/footer.php');
+            exit;
+          }
+  
+          // // Unhashed passwords
+          // if($clientData['password'] != $clientPassword) {
           //     $message = '<p class="errorMessage">Please enter a valid password</p>';
-          //     include '../view/login.php';
+          //     include('login.php');
+          //     include($root . '/common/footer.php');
           //     exit;
           // }
-  
-          // Unhashed passwords
-          if($clientData['password'] != $clientPassword) {
-              $message = '<p class="errorMessage">Please enter a valid password</p>';
-              include('login.php');
-              include($root . '/common/footer.php');
-              exit;
-          }
           
           // If their login information is good, store some of it in the session data
           $_SESSION['loggedin'] = TRUE;
@@ -66,15 +67,10 @@
           // Now store the rest in the session array
           $_SESSION['clientData'] = $clientData;
           
-         // include('common/loginInfo.php');
-          //echo("<h2>http://fitness.scottmosherphotography.com/view/home.php</h2>");
-          //header("location:view/home.php");
-         //include('home.php');
-         //header('HTTP/1.0 302 Found');
-         header("Location: home.php");
-         //include '../common/footer.php';
-         include($root . '/common/footer.php');
-         exit;
+          header("Location: home.php");
+          //include '../common/footer.php';
+          include($root . '/common/footer.php');
+          exit;
 
         case 'logout':
           //echo("HI there");

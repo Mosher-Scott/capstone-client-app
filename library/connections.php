@@ -24,7 +24,7 @@ function devConnect(){
     } else if($_SERVER["DOCUMENT_ROOT"] == "G:/xampp/htdocs") {
 
       $basePath = desktopURL;
-      $server = 'localhost';
+      $server = 'localhost:3308';
         $dbname = 'fitnessapp';
         $userName = "localUser";
         $password = "testing123";
