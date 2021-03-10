@@ -25,7 +25,6 @@
           $clientEmail = filter_input(INPUT_POST, 'userEmail', FILTER_SANITIZE_EMAIL);
           $clientEmail = checkEmailFormat($clientEmail);
           $clientPassword = filter_input(INPUT_POST, 'userPassword', FILTER_SANITIZE_STRING);
-          //$passwordCheck = checkPasswordFormat($clientPassword);
   
           // If anything is wrong, send the user back to the page & have them fix things
           if (empty($clientEmail) || empty($clientPassword)) {
@@ -49,14 +48,6 @@
             include($root . '/common/footer.php');
             exit;
           }
-  
-          // // Unhashed passwords
-          // if($clientData['password'] != $clientPassword) {
-          //     $message = '<p class="errorMessage">Please enter a valid password</p>';
-          //     include('login.php');
-          //     include($root . '/common/footer.php');
-          //     exit;
-          // }
           
           // If their login information is good, store some of it in the session data
           $_SESSION['loggedin'] = TRUE;
@@ -67,7 +58,8 @@
           // Now store the rest in the session array
           $_SESSION['clientData'] = $clientData;
           
-          header("Location: home.php");
+          header("Location: home.php"); // Taken out for testing
+
           //include '../common/footer.php';
           include($root . '/common/footer.php');
           exit;
@@ -75,10 +67,9 @@
         case 'logout':
           //echo("HI there");
 
-          if ($_SESSION['loggedin'] == TRUE && isset($_SESSION['clientData'])) {
-            $isLoggedIn = 'Yes';
+          if ($_SESSION['loggedin'] == 1) {
+            //$isLoggedIn = 'Yes';
 
-            //echo("hi there");
             $cookie_name = 'email';
             $email = $_SESSION['clientData']['email'];
             $clientId = $_SESSION['clientData']['fitness_app_client_id'];
@@ -89,9 +80,9 @@
               $isLoggedIn = 'No';
           }
   
-          $_SESSION = array();
+          // $_SESSION = array();
           
-          $_SESSION['loggedin'] = FALSE;
+          // $_SESSION['loggedin'] = 0;
 
           // Destroy the session
           session_destroy();
@@ -99,6 +90,18 @@
           header("location: index.php");
 // Comments
       break;
+
+      default:
+      //echo($_SESSION['loggedin']);
+          if($_SESSION['loggedin'] == TRUE) {
+            header("Location: home.php");
+            //include '../common/footer.php';
+            include($root . '/common/footer.php');
+            exit;
+          } else {
+            //echo("not logged");
+          }
+          break;
   
    } // End of switch statement
 

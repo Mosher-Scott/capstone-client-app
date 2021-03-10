@@ -21,23 +21,28 @@
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         //print_r($_POST);
 
+        // Check everything first
+
         $data = json_encode($_POST);
 
-
-        //echo($data);
+        echo("<br>");
+        print_r($data);
 
         $result = PostRequestDataInBody(clientWorkoutHistory, $data);
 
         $result = json_decode($result, true);
 
-        echo("<br>");
-        //print_r($result);
+        //echo("<br>");
+        print_r($result);
 
         if($result['success'] == '1') {
+        
             echo '<script type="text/javascript"> SuccessfullyAddedWorkout(); </script>'; 
 
             header("location: home.php");
             exit;
+        } else if ($result['success'] != '1') {
+            //print_r($result);
         }
 
         // foreach ($_POST['exercise'] AS $item) {

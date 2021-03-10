@@ -90,7 +90,7 @@
             $trainingSessionDiv .= "<td>$session[sessiondescription]</td>";
             $trainingSessionDiv .= "<td>$session[sessionsets]</td>";
             $trainingSessionDiv .= "<td>$session[sessionreps]</td>";
-            $trainingSessionDiv .= "<td><a class='btn btn-primary' href='record-workout.php?sessionId=$session[id]'>Do Session</a></td>";
+            $trainingSessionDiv .= "<td><a class='btn btn-primary' href='record-workout.php?sessionId=$session[id]'>Do It!</a></td>";
             $trainingSessionDiv .= "</tr>";
         }
 
@@ -213,6 +213,7 @@
  
              $form .= "<label for='exercise[$arrayId]sets'>Sets: </label>";
              $form .= "<input type='text' class='form-control' id='exercise[$arrayId]sets' name='exercise[$arrayId][sets]' required>";
+             
              $form .= "<label for='exercise[$arrayId]reps'>Reps: </label>";
              $form .= "<input type='text' class='form-control' id='exercise[$arrayId]reps' name='exercise[$arrayId][reps]' required>";
  
@@ -221,7 +222,7 @@
  
              $form .= "<label for='exercise[$arrayId]seconds'>Seconds: </label>";
              $form .= "<input type='text' class='form-control' id='exercise[$arrayId]seconds' name='exercise[$arrayId][seconds]'>";
-             //$form .= "<hr>";
+             $form .= "<hr>";
          //print_r($exercise['exercise_name']);
              $arrayId++;
          }     

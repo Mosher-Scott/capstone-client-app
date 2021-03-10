@@ -59,9 +59,12 @@ if ($action == NULL) {
         // Now store the rest in the session array
         $_SESSION['clientData'] = $clientData;
 
-
         header('../view/home.php');
-        exit;
+        break;
+
+    case 'forgotEmail':
+        
+        break;
 
  }
 

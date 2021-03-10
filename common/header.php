@@ -9,7 +9,7 @@
 
     $isLoggedIn = '';
 
-    if ($_SESSION['loggedin'] == TRUE) {
+    if ($_SESSION['loggedin'] == 1) {
             $isLoggedIn = 'Yes';
     } else {
         $isLoggedIn = 'No';

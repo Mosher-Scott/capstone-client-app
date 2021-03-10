@@ -49,22 +49,12 @@ $secureToken = new SecureToken();
 // Requires an endpoint.  It should be a fully formed endpoint
 function GetRequest($endpoint){
 
+  GetAuthToken();
+
   $tokenString = "Authorization: Bearer " . $_SESSION['validationToken'];
 
    //var_dump($endpoint);
    $curl = curl_init();
-
-    // curl_setopt_array($curl, array(
-    // CURLOPT_URL => $endpoint,
-    // CURLOPT_RETURNTRANSFER => true,
-    // CURLOPT_TIMEOUT => 30,
-    // CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    // CURLOPT_CUSTOMREQUEST => "GET",
-    // CURLOPT_HTTPHEADER => array(
-    //     "cache-control: no-cache",
-    //     "$tokenString"
-    // ),
-    // ));
 
     // From Postman
     curl_setopt_array($curl, array(
@@ -90,56 +80,64 @@ function GetRequest($endpoint){
 }
 
 function PostRequest($endpoint){
+  GetAuthToken();
+  //var_dump($endpoint);
 
-    //var_dump($endpoint);
-    $curl = curl_init();
- 
-     curl_setopt_array($curl, array(
-     CURLOPT_URL => $endpoint,
-     CURLOPT_RETURNTRANSFER => true,
-     CURLOPT_TIMEOUT => 30,
-     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-     CURLOPT_CUSTOMREQUEST => "POST",
-     CURLOPT_HTTPHEADER => array(
-      "$tokenString"
-    ),
-     ));
- 
-     $response = curl_exec($curl);
-     $err = curl_error($curl);
- 
-     curl_close($curl);
- 
-     return $response;
- }
+  $tokenString = "Authorization: Bearer " . $_SESSION['validationToken'];
 
- function PostRequestDataInBody($endpoint, $formData){
-
-    //echo($formData);
-    $curl = curl_init();
+  $curl = curl_init();
 
     curl_setopt_array($curl, array(
     CURLOPT_URL => $endpoint,
     CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_ENCODING => '',
-    CURLOPT_MAXREDIRS => 10,
-    CURLOPT_TIMEOUT => 0,
-    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_TIMEOUT => 30,
     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    CURLOPT_CUSTOMREQUEST => 'POST',
-    //CURLOPT_POSTFIELDS =>'{"sessionId":"6","clientId":"1","exercise":[{"id":"7","sets":"1","reps":"1","weight":"10","seconds":""},{"id":"8","sets":"3","reps":"10","weight":"52","seconds":""},{"id":"9","sets":"13","reps":"1","weight":"","seconds":"25"},{"id":"19","sets":"3","reps":"12","weight":"1","seconds":"23"},{"id":"20","sets":"3","reps":"12","weight":"15","seconds":"3"},{"id":"21","sets":"9","reps":"80","weight":"15","seconds":"23"}]}',
-    CURLOPT_POSTFIELDS => $formData,
+    CURLOPT_CUSTOMREQUEST => "POST",
     CURLOPT_HTTPHEADER => array(
-      "$tokenString"
-    ),
+    "$tokenString"
+  ),
     ));
 
-     $response = curl_exec($curl);
-     $err = curl_error($curl);
- 
-     curl_close($curl);
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
 
-     return $response;
+    curl_close($curl);
+
+    return $response;
+ }
+
+ function PostRequestDataInBody($endpoint, $formData){
+  GetAuthToken();
+  //echo($formData);
+  $curl = curl_init();
+
+  //$formData = "'" . $formData . "'";
+  $tokenString = "Authorization: Bearer " . $_SESSION['validationToken'];
+
+  curl_setopt_array($curl, array(
+  CURLOPT_URL => $endpoint,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  //CURLOPT_POSTFIELDS =>'{"sessionId":"6","clientId":"1","exercise":[{"id":"7","sets":"1","reps":"1","weight":"10","seconds":""},{"id":"8","sets":"3","reps":"10","weight":"52","seconds":""},{"id":"9","sets":"13","reps":"1","weight":"","seconds":"25"},{"id":"19","sets":"3","reps":"12","weight":"1","seconds":"23"},{"id":"20","sets":"3","reps":"12","weight":"15","seconds":"3"},{"id":"21","sets":"9","reps":"80","weight":"15","seconds":"23"}]}',
+  CURLOPT_POSTFIELDS => $formData,
+  CURLOPT_HTTPHEADER => array(
+    "$tokenString",
+    'Content-Type: application/json'
+  ),
+  ));
+
+  print_r($curl);
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+
+    curl_close($curl);
+    echo $response;
+    return $response;
  }
 
 // Parsss a web JSON response, and saves it as an array
@@ -160,10 +158,10 @@ function GetAuthToken() {
    if(isset($_SESSION['validationToken']) && isset($_SESSION['validationExpires'])) {
      if($_SESSION['validationExpires'] > date("Y-m-d H:i:s"))
      $validToken = true;
-     echo("token is valid");
+    // echo("token is valid");
      return;
    }
-   echo("Token not valid");
+   //echo("Token not valid");
 
     $curl = curl_init();
     
@@ -186,16 +184,19 @@ function GetAuthToken() {
     $response = curl_exec($curl);
 
     curl_close($curl);
+
+    ParseTokenResponse($response);
+
     return $response;
 }
 
 function ParseTokenResponse($response) {
   global $secureToken;
   
-  echo ($response);
+  //echo ($response);
   $json = json_decode($response);
 
-  echo(gettype($json));
+  //echo(gettype($json));
  
   $secureToken-> SetToken($json->access_token);
   $secureToken-> SetExpireIn($json->expires_in);

@@ -12,14 +12,10 @@ h5{
 }       
 
 
-
-
-
 @media screen and (max-width:700px) {
     body{
-        font-size: 10px;
+        font-size: 1em;
         background-color: lightsteelblue !important;
-        
     }
 
     main {
@@ -44,6 +40,11 @@ h5{
 
     b {
         padding-right: 5px;
+    }
+
+    hr {
+        height: 5px !important;
+        background-color: lightsteelblue !important;
     }
 
     #formDiv {

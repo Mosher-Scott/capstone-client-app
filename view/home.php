@@ -1,8 +1,9 @@
 <?php 
   session_start();
   include_once('../common/header.php');
-
-  if ($_SESSION['loggedin'] != TRUE) {
+  
+  //echo($_SESSION['loggedin']);
+  if ($_SESSION['loggedin'] != 1) {
     
     header('Location: index.php');
 
