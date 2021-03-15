@@ -4,7 +4,7 @@ function devConnect(){
     if ($_SERVER["DOCUMENT_ROOT"] == "C:/Users/smosher/source/repos/capstone-client-app") {
         
       $basePath = l2URL;
-      $server = 'localhost';
+      $server = 'localhost:80';
         $dbname = 'fitnessapp';
         $userName = "localUser";
         $password = "testing123";

@@ -21,29 +21,49 @@
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         //print_r($_POST);
 
-        // Check everything first
-
-        $data = json_encode($_POST);
-
-        echo("<br>");
-        print_r($data);
-
-        $result = PostRequestDataInBody(clientWorkoutHistory, $data);
-
-        $result = json_decode($result, true);
-
-        //echo("<br>");
-        print_r($result);
-
-        if($result['success'] == '1') {
         
-            echo '<script type="text/javascript"> SuccessfullyAddedWorkout(); </script>'; 
+        $clientId = $_POST['clientId'];
+        $sessionId = $_POST['sessionId'];
 
-            header("location: home.php");
-            exit;
-        } else if ($result['success'] != '1') {
-            //print_r($result);
+        $workoutInfo = [$clientId, $sessionId];
+
+        //$exerciseInfo = [];
+
+        foreach ($_POST['exercise'] AS $item) {
+           // Get item info
+           $singleExerciseInfo = [$item['id'], $item['sets'], $item['reps'], $item['weight'], $item['seconds']];
+
+            $workoutInfo.push($singleExerciseInfo);
         }
+
+        print_r($workoutInfo);
+        // Check everything first
+        // Save the data to variables
+
+        //Commented out for testing
+        // $data = json_encode($_POST);
+
+        // echo("<br>");
+        // print_r($data);
+
+        // $result = PostRequestDataInBody(clientWorkoutHistory, $data);
+
+        // $result = json_decode($result, true);
+
+        // //echo("<br>");
+        // print_r($result);
+
+        // if($result['success'] == '1') {
+        
+        //     echo '<script type="text/javascript"> SuccessfullyAddedWorkout(); </script>'; 
+
+        //     header("location: home.php");
+        //     exit;
+        // } else if ($result['success'] != '1') {
+        //     //print_r($result);
+        // }
+
+        // End of comments
 
         // foreach ($_POST['exercise'] AS $item) {
         //    // Get item info
@@ -51,6 +71,7 @@
         //     $sets = $item['sets'];
         //     $reps = $item['reps'];
         //     $weight = $item['weight'];
+        //      $time = $item['seconds'];
            
         //     $date = date("Y-m-d H:i:s");
            

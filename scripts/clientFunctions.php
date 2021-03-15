@@ -184,7 +184,7 @@
         return $workoutDiv;
     }
 
-    function CreateTrainingSessionExercisesForm($exercises, $sessionId) {
+    function CreateTrainingSessionExercisesForm($exercises, $sessionId, $postData) {
         // var_dump($exercises);
          $form = "<div id='sessionForm' class='form-group'>";
          $form .= "<form method='post'>";
@@ -212,6 +212,8 @@
              $form .= "<input type='hidden' name='exercise[$arrayId][id]' value='$id'>";
  
              $form .= "<label for='exercise[$arrayId]sets'>Sets: </label>";
+
+             if(isset($postData[$arrayId][0])){"value='$invPrice'";}
              $form .= "<input type='text' class='form-control' id='exercise[$arrayId]sets' name='exercise[$arrayId][sets]' required>";
              
              $form .= "<label for='exercise[$arrayId]reps'>Reps: </label>";
