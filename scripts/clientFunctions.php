@@ -67,7 +67,7 @@
     
     function GetExercises() {
 
-        $endpoint = exericiseEndpoint;
+        $endpoint = exerciseEndpoint;
 
         $json = GetRequest($endpoint);
 

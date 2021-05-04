@@ -7,7 +7,25 @@
     header('Location: index.php');
   }
 
-  $action = filter_input(INPUT_POST,'pageType');
+  $action = filter_input(INPUT_POST,'pagetype');
+
+  // For when the user saves the edited data
+  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    print_r($_POST);
+
+    $id = $_POST['exerciseId'];
+    $name = $_POST['name'];
+    $instruction = $_POST['instruction'];
+    $videoLink = $_POST['videoLink'];
+    $muscleGroupId = $_POST['muscleGroupId'];
+    $muscleGroupName = $_POST['exerciseId'];
+    $active = $_POST['activeCheckbox'];
+
+    // TODO: Validate the data. If fails, return user to the form with error message
+
+    // TODO: If passes, save data to database and check result
+  }
+  
 
   if ($action == NULL) {
       $action = filter_input(INPUT_GET,'action');
@@ -43,6 +61,9 @@
         $exerciseId = filter_input(INPUT_GET,'exerciseId');
         echo("ExerciseId: " . $exerciseId);
         break;
+
+    case 'exerciseEdited':
+      echo("ACTION" . $action);
    }
 
  

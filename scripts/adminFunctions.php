@@ -72,8 +72,8 @@
         $tableDiv .= "<tr>";
         $tableDiv .= "<th>ID</th>";
         $tableDiv .= "<th>Name</th>";
-        $tableDiv .= "<th>Instructions</th>";
         $tableDiv .= "<th>Group</th>";
+        $tableDiv .= "<th>Active</th>";
         $tableDiv .= "<th>Options</th>";
         $tableDiv .= "</tr>";
         $tableDiv .= "</thead>";
@@ -81,11 +81,19 @@
         $tableDiv .= "<tbody>";
         
         foreach($data AS $exercise) {
+
+            $active = $exercise['active'];
+
+            if($active == 1 || $active == '') {
+                $active = "True";
+            } else {
+                $active = "False";
+            }
             $tableDiv .= "<tr>";
             $tableDiv .= "<td>$exercise[exercise_id]</td>";
             $tableDiv .= "<td>$exercise[name]</td>";
-            $tableDiv .= "<td>$exercise[instruction]</td>";
             $tableDiv .= "<td>$exercise[muscle_group_name]</td>";
+            $tableDiv .= "<td>$active</td>";
             $tableDiv .= "<td>
             <a class='btn btn-primary' href='exercises.php?action=edit&exerciseId=$exercise[exercise_id]'>Edit</a>
 
@@ -131,7 +139,9 @@
         $form .= "<input type='text' class='form-control' id='name' name='name' value='$name' required>";
 
         $form .= "<label for='instruction'>Instructions: </label>";
-        $form .= "<input type='text' class='form-control' id='instruction' name='instruction' value='$instruction' required>";
+        $form .= "<textarea class='form-control' id='instruction' name='instruction' required rows='4' columns='50'>";
+        $form .= $instruction;
+        $form .="</textarea>";
 
         $form .= "<label for='videoLink'>Video Link: </label>";
         $form .= "<input type='text' class='form-control' id='videoLink' name='videoLink' value='$videoLink' required>";
@@ -142,10 +152,25 @@
         $form .= "<label for='muscleGroupName'>Muscle Group: </label>";
         $form .= "<input type='text' class='form-control' id='muscleGroupName' name='muscleGroupName' value='$muscleGroupName' required>";
 
+        
+        if($active == 1 || $active == '') {
+            $form .= "<div class='form-check'>
+                    <input class='form-check-input' type='checkbox' name='activeCheckbox' value='True' id='activeCheckbox' 
+                    checked />
+                    <label class='form-check-label' for='activeCheckbox'>Active</label>
+                </div>";
+        } else {
+            $form .= "<div class='form-check'>
+                    <input class='form-check-input' type='checkbox' name='activeCheckbox' value='False' id='activeCheckbox' 
+                    />
+                    <label class='form-check-label' for='activeCheckbox'>Active</label>
+                </div>";
+        }
+
         $form .= "<button type='submit' class='btn btn-primary' value='save'>Save Changes</button>";
         $form .= "</form>";
 
-        $form .= "<a class='btn btn-primary' href='exercises.php?action=viewAll'>Back</a>";
+        $form .= "<a class='btn btn-primary' href='exercises.php?action=exerciseEdited'>Back</a>";
 
         $form .= "</div>";
 
