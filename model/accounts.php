@@ -25,7 +25,7 @@ function getClient($clientEmail) {
     try {
         $db = devConnect();
 
-        $sql = 'SELECT fitness_app_client_id, email, password FROM info WHERE email = :email';
+        $sql = 'SELECT fitness_app_client_id, email, roleid, password FROM info WHERE email = :email';
         
         $stmt = $db -> prepare($sql);
         //echo("<h1>suck</h1>");

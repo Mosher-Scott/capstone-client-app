@@ -17,15 +17,23 @@
     }
     
     include_once('../common/header.php');
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $sessionId = $_POST['sessionId'];
+    } else {
+        $sessionId = isset($_GET['sessionId']) ? $_GET['sessionId'] : null;
+    }
+    
+    $sessionInfo = GetTrainingSessionExercises($sessionId);
+
     // TODO: Setup POST handling method.  Prefer to set it up so values are saved in case data can't be saved to the database
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         //print_r($_POST);
-
         
-        $clientId = $_POST['clientId'];
-        $sessionId = $_POST['sessionId'];
+        // $clientId = $_POST['clientId'];
+        // $sessionId = $_POST['sessionId'];
 
-        $workoutInfo = [$clientId, $sessionId];
+        $workoutInfo = array();
 
         //$exerciseInfo = [];
 
@@ -33,37 +41,38 @@
            // Get item info
            $singleExerciseInfo = [$item['id'], $item['sets'], $item['reps'], $item['weight'], $item['seconds']];
 
-            $workoutInfo.push($singleExerciseInfo);
+            array_push($workoutInfo, $singleExerciseInfo);
         }
 
-        print_r($workoutInfo);
-        // Check everything first
-        // Save the data to variables
+        //print_r($workoutInfo);
 
-        //Commented out for testing
-        // $data = json_encode($_POST);
+        //Commented out for testing. Saving info to the database
+        $data = json_encode($_POST);
 
-        // echo("<br>");
-        // print_r($data);
+        echo("<br>");
+        print_r($data);
 
-        // $result = PostRequestDataInBody(clientWorkoutHistory, $data);
+        $result = PostRequestDataInBody(clientWorkoutHistory, $data);
 
-        // $result = json_decode($result, true);
+        $result = json_decode($result, true);
 
-        // //echo("<br>");
-        // print_r($result);
+        //echo("<br>");
+        print_r($result);
 
-        // if($result['success'] == '1') {
+        //$result['success'] = 0; // For testing
+        if($result['success'] == '1') {
         
-        //     echo '<script type="text/javascript"> SuccessfullyAddedWorkout(); </script>'; 
+            echo '<script type="text/javascript"> SuccessfullyAddedWorkout(); </script>'; 
 
-        //     header("location: home.php");
-        //     exit;
-        // } else if ($result['success'] != '1') {
-        //     //print_r($result);
-        // }
+            header("location: home.php");
+            exit;
+        } else if ($result['success'] != '1') {
+            //print_r($result);
+            echo("<h4 class='alert alert-danger'>Something went wrong when recording your workout</h4>");
+            echo(CreateTrainingSessionExercisesForm($sessionInfo, $sessionId, $workoutInfo));
+        }
 
-        // End of comments
+        
 
         // foreach ($_POST['exercise'] AS $item) {
         //    // Get item info

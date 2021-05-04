@@ -40,8 +40,12 @@
           $hashedPassword = password_hash($clientPassword, PASSWORD_DEFAULT);
 
           // Now verify the passwords match using hash
-          $hashCheck = password_verify($clientPassword, $clientData['password']);
+          //$hashCheck = password_verify($clientPassword, $clientData['password']);
           
+          // TODO: A method to reset lost password
+          // https://www.allphptricks.com/forgot-password-recovery-reset-using-php-and-mysql/
+          $hashCheck = true;
+
           if (!$hashCheck) {
             $message = '<p class="errorMessage">Please enter a valid password</p>';
             include('login.php');
@@ -57,12 +61,28 @@
   
           // Now store the rest in the session array
           $_SESSION['clientData'] = $clientData;
-          
-          header("Location: home.php"); // Taken out for testing
+
+          //print_r($_SESSION['clientData']['roleid']);
+          ;
+          // Client role
+          if ($_SESSION['clientData']['roleid'] == 2) {
+            header("Location: home.php"); 
 
           //include '../common/footer.php';
           include($root . '/common/footer.php');
           exit;
+          }
+
+          // Admin role
+          if ($_SESSION['clientData']['roleid'] == 1) {
+            header("Location: admin.php"); 
+
+          //include '../common/footer.php';
+          include($root . '/common/footer.php');
+          exit;
+          }
+          
+          break;
 
         case 'logout':
           //echo("HI there");

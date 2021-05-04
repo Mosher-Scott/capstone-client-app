@@ -37,7 +37,13 @@
 </head>
 <body>
     <header class="text-center">
-        <h1 class="text-center">Fitness Tracker - Client Portal</h1>
+    <?php if(isset($_SESSION['clientData']['roleid'])) {
+        echo("<h1 class='text-center'>Fitness Tracker - " . ($_SESSION['clientData']['roleid'] == 1) ? 'Admin Portal' : 'Client Portal' . "</h1>");
+    } else {
+        echo("<h1 class='text-center'>Fitness Tracker</h1>");
+    }
+        ?>
+        
         <?php
             if($_SESSION['loggedin']) {
                 include_once($root . '/common/loginInfo.php');

@@ -10,6 +10,7 @@ $authToken;
 define("clientEndpoint", $environment . "clients/");
 define("trainingSessionEndpoint", $environment . "trainingsessions/");
 define("clientWorkoutHistory", $environment . "clients/workouthistory");
+define("exericiseEndpoint", $environment . "exercises/");
 
 class SecureToken {
   public $token = '';

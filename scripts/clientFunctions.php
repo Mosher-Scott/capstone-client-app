@@ -1,9 +1,18 @@
 <?php
     
-    
     function GetClientData($clientId) {
   
         $endpoint = clientEndpoint . $clientId;
+
+        $clientJson = GetRequest($endpoint);
+    
+        $clientData = ParseJsonData($clientJson);
+
+        return $clientData;
+    }
+
+    function GetAllClientData() {
+        $endpoint = clientEndpoint;
 
         $clientJson = GetRequest($endpoint);
     
@@ -47,6 +56,18 @@
     function GetSingleTrainingSession($id) {
 
         $endpoint = clientEndpoint . "/workouthistory/" . $id;
+
+        $json = GetRequest($endpoint);
+
+        $data = ParseJsondata($json);
+
+        return $data;
+    }
+
+    
+    function GetExercises() {
+
+        $endpoint = exericiseEndpoint;
 
         $json = GetRequest($endpoint);
 
@@ -184,19 +205,19 @@
         return $workoutDiv;
     }
 
-    function CreateTrainingSessionExercisesForm($exercises, $sessionId, $postData) {
+    function CreateTrainingSessionExercisesForm($exercises, $sessionId, $postData ='') {
         // var_dump($exercises);
          $form = "<div id='sessionForm' class='form-group'>";
          $form .= "<form method='post'>";
          $arrayId = 0;
 
-         $clientId = $_SESSION['clientData']['fitness_app_client_id'];;
+         $clientId = $_SESSION['clientData']['fitness_app_client_id'];
  
          $form .= "<input type='hidden' name='sessionId' value='$sessionId'>";
          $form .= "<input type='hidden' name='clientId' value='$clientId'>";
  
          foreach($exercises AS $exercise) {
-             
+
              $name = $exercise['exercise_name'];
              $instructions = $exercise['instruction'];
              $muscleGroup = $exercise['muscle_group'];
@@ -205,6 +226,7 @@
              $form .= "<div id='exercise[$arrayId]Info'>";
              $form .= "<p><b>Exercise: </b>$name</p>";
              $form .= "<p><b>Instructions: </b>$instructions</p>";
+             // Future video
              //$form .= "<iframe width='400' height='315' src='https://www.youtube.com/embed/ysdVPVuj7_s' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>";
              $form .= "<p><b>Muscle Group: </b>$muscleGroup</p>";
              $form .= "</div>";
@@ -213,17 +235,27 @@
  
              $form .= "<label for='exercise[$arrayId]sets'>Sets: </label>";
 
-             if(isset($postData[$arrayId][0])){"value='$invPrice'";}
-             $form .= "<input type='text' class='form-control' id='exercise[$arrayId]sets' name='exercise[$arrayId][sets]' required>";
+            $sets = '';
+            $reps = '';
+            $weight = '';
+            $time = '';
+
+            if($postData != '') {
+                $sets = $postData[$arrayId][1];
+                $reps = $postData[$arrayId][2];
+                $weight = $postData[$arrayId][3];
+                $seconds = $postData[$arrayId][4];
+             }
+             $form .= "<input type='text' class='form-control' id='exercise[$arrayId]sets' name='exercise[$arrayId][sets]' value='$sets' required>";
              
              $form .= "<label for='exercise[$arrayId]reps'>Reps: </label>";
-             $form .= "<input type='text' class='form-control' id='exercise[$arrayId]reps' name='exercise[$arrayId][reps]' required>";
+             $form .= "<input type='text' class='form-control' id='exercise[$arrayId]reps' name='exercise[$arrayId][reps]' value='$reps' required>";
  
              $form .= "<label for='exercise[$arrayId]weight'>Weight: </label>";
-             $form .= "<input type='text' class='form-control' id='exercise[$arrayId]weight' name='exercise[$arrayId][weight]'>";
+             $form .= "<input type='text' class='form-control' id='exercise[$arrayId]weight' name='exercise[$arrayId][weight]' value='$weight'>";
  
              $form .= "<label for='exercise[$arrayId]seconds'>Seconds: </label>";
-             $form .= "<input type='text' class='form-control' id='exercise[$arrayId]seconds' name='exercise[$arrayId][seconds]'>";
+             $form .= "<input type='text' class='form-control' id='exercise[$arrayId]seconds' name='exercise[$arrayId][seconds]' value='$seconds'>";
              $form .= "<hr>";
          //print_r($exercise['exercise_name']);
              $arrayId++;
